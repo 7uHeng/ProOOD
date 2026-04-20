@@ -78,3 +78,11 @@ If you find this work helpful in your research, please consider citing:
   journal={arXiv preprint arXiv:2604.01081},
   year={2026}
 }
+```
+
+## Acknowledgement
+This project is based on the following open-source projects. We thank their authors for making the source code publically available.
+* [SGN](https://github.com/Jieqianyu/SGN)
+* [ProtoOcc](https://github.com/SPA-junghokim/ProtoOcc)
+* [VoxDet](https://github.com/vita-epfl/VoxDet)
+* [mmdet3d](https://github.com/open-mmlab/mmdetection3d)
