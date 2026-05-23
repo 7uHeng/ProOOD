@@ -66,6 +66,19 @@ Please refer to **[docs/run.md](docs/run.md)** for all training and evaluation c
 
 ---
 
+## 📦 Pretrained Weights
+
+We provide pretrained models for the SGN backbone on different datasets:
+
+| Model | Dataset | Depth Model | Download |
+|:------|:--------|:------------|:---------|
+| ProOOD + SGN | SemanticKITTI | MobileStereoNet | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_semkitti_occ.pth) |
+| ProOOD + SGN | KITTI-360 | MobileStereoNet | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_kitti360_occ.pth) |
+| ProOOD + SGN (OOD) | SemanticKITTI | SQL | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_ood.pth) |
+| ProOOD + SGN (OOD) | KITTI-360 | SQL | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_kitti360_ood.pth) |
+
+---
+
 ## 🌿 Branches & Baselines
 
 ProOOD is designed as a **plug-and-play** module. We provide implementations integrated with two distinct mainstream 3D occupancy prediction backbones:
