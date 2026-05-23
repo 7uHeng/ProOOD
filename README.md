@@ -45,15 +45,10 @@ All commands in **[docs/run.md](docs/run.md)**. Quick start:
 | Config | Train Set | Train Depth | Test Depth | OOD | Weights |
 |:--|:--|:--|:--|:--:|:--|
 | `proood-semkitti` | SemanticKITTI | MSN | MSN | — | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_semkitti_occ.pth) |
-| `proood-sql-semkitti` | SemanticKITTI | SQL | SQL | — | — |
+| `proood-sql-semkitti` | SemanticKITTI | SQL | SQL | ✓ | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_ood.pth) |
 | `proood-kitti360` | KITTI-360 | MSN | MSN | — | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_kitti360_occ.pth) |
-| `proood-sql-kitti360` | KITTI-360 | SQL | SQL | — | — |
-| `proood-ood-vaakitti` | SemanticKITTI | MSN | SQL | ✓ | — |
-| `proood-ood-vaakitti360` | KITTI-360 | SQL | SQL | ✓ | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_kitti360_ood.pth) |
-| `proood-ood-stu` | SemanticKITTI | MSN | SQL | ✓ | — |
-
+| `proood-sql-kitti360` | KITTI-360 | SQL | SQL | ✓ | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_kitti360_ood.pth) |
 > **MSN** = MobileStereoNet. All models use the SGN backbone.  
-> OOD configs are for OccOoD benchmark evaluation (Vaakitti / Vaakitti360 / STU).
 
 ## 🌿 Branches
 
