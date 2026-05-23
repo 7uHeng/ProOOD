@@ -57,7 +57,7 @@ After training, evaluate OOD detection capability using OccOoD benchmarks:
 # Vaakitti360 (OOD objects in KITTI-360)
 ./tools/dist_test_ood.sh projects/configs/sgn/proood-ood-vaakitti360.py ./path/to/ckpts.pth 4
 
-# Street3D / STU (cross-dataset OOD)
+# STU (cross-dataset OOD)
 ./tools/dist_test_ood.sh projects/configs/sgn/proood-ood-stu.py ./path/to/ckpts.pth 4
 ```
 
