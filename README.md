@@ -60,9 +60,9 @@ Please refer to **[docs/run.md](docs/run.md)** for all training and evaluation c
 | `proood-sql-semkitti.py` | SemanticKITTI | SQL | No |
 | `proood-kitti360.py` | KITTI-360 | MobileStereoNet | No |
 | `proood-sql-kitti360.py` | KITTI-360 | SQL | No |
-| `proood-ood-vaakitti.py` | Vaakitti | MobileStereoNet → SQL | Yes |
+| `proood-ood-vaakitti.py` | Vaakitti | SQL | Yes |
 | `proood-ood-vaakitti360.py` | Vaakitti360 | SQL | Yes |
-| `proood-ood-stu.py` | Street3D/STU | MobileStereoNet → SQL | Yes |
+| `proood-ood-stu.py` | STU | SQL | Yes |
 
 ---
 
