@@ -264,4 +264,4 @@ After training a ProOOD model on the standard SemanticKITTI or KITTI-360 benchma
 ./tools/dist_test.sh projects/configs/sgn/proood-ood-stu.py ./path/to/ckpts.pth 4
 ```
 
-These configs set `ood_flag=True` in the model head and use the corresponding OOD test datasets to compute uncertainty-based OOD detection metrics.
+These configs set `ood_flag=True` in the model head and use the corresponding OOD test datasets to compute OOD detection metrics.
