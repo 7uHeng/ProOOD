@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 <p align="center">
-  <img src="https://github.com/7uHeng/ProOOD/blob/main/asserts/pipeline.png" width="800" alt="ProOOD Pipeline">
+  <img src="asserts/pipeline.png" width="800" alt="ProOOD Pipeline">
 </p>
 
 ## 📰 Abstract
@@ -20,16 +20,49 @@ Extensive experiments on five datasets demonstrate that ProOOD achieves state-of
 
 ---
 
-## 🚀 Updates
+## 🛠️ Installation
 
-* **[2026/04]** 🎉 Repository initialized! We are actively preparing the final release.
-    * **Current Status**:
-        - [ ] Update & Clean OCC Training Code
-        - [ ] Release Pre-trained OCC Weights (ID Performance)
-        - [ ] Release OccOoD Dataset (Benchmark for OOD Detection)
-        - [ ] Release OOD Detection Weights & Scripts
-    
-    * **Note**: Please check the **Branches** section below for baseline implementations.
+Please refer to **[docs/install.md](docs/install.md)** for step-by-step installation instructions, including:
+- Conda environment setup (Python 3.8)
+- PyTorch 1.9.1 + CUDA 11.1
+- mmcv-full, mmdet, mmseg, mmdet3d
+- Additional dependencies (timm, spconv, torch-scatter, torchmetrics)
+
+## 📂 Data Preparation
+
+Please refer to **[docs/dataset.md](docs/dataset.md)** for detailed instructions on:
+- **SemanticKITTI**: Download, label generation, depth estimation (MobileStereoNet/SQL), pseudo point cloud generation
+- **SSCBench-KITTI-360**: Download, label preprocessing, depth to pseudo point cloud
+- **OccOoD Dataset**: OOD benchmarks (Vaakitti, Vaakitti360, STU)
+
+## 🏋️ Training & Evaluation
+
+Please refer to **[docs/run.md](docs/run.md)** for all training and evaluation commands.
+
+### Quick Start
+
+```shell
+# Train ProOOD on SemanticKITTI with 4 GPUs
+./tools/dist_train.sh projects/configs/sgn/proood-semkitti.py 4
+
+# Evaluate
+./tools/dist_test.sh projects/configs/sgn/proood-semkitti.py ./path/to/ckpts.pth 4
+
+# OOD Evaluation
+./tools/dist_test_ood.sh projects/configs/sgn/proood-ood-vaakitti.py ./path/to/ckpts.pth 4
+```
+
+### Available Configs
+
+| Config | Dataset | Depth Model | OOD? |
+|--------|---------|-------------|------|
+| `proood-semkitti.py` | SemanticKITTI | MobileStereoNet | No |
+| `proood-sql-semkitti.py` | SemanticKITTI | SQL | No |
+| `proood-kitti360.py` | KITTI-360 | MobileStereoNet | No |
+| `proood-sql-kitti360.py` | KITTI-360 | SQL | No |
+| `proood-ood-vaakitti.py` | Vaakitti | MobileStereoNet → SQL | Yes |
+| `proood-ood-vaakitti360.py` | Vaakitti360 | SQL | Yes |
+| `proood-ood-stu.py` | Street3D/STU | MobileStereoNet → SQL | Yes |
 
 ---
 
@@ -39,34 +72,22 @@ ProOOD is designed as a **plug-and-play** module. We provide implementations int
 
 | Branch Name | Description | Status |
 | :--- | :--- | :--- |
-| [`main`](https://github.com/7uHeng/ProOOD/tree/main) | **ProOOD + [SGN]** <br> The primary implementation integrating ProOOD with **[SGN]**.  | 🚧 Updating |
-| [`baseline_b`](https://github.com/7uHeng/ProOOD/tree/baseline_b) | **ProOOD + [VoxDet]** <br> The implementation integrating ProOOD with **[VoxDet]**.  | 🚧 Updating |
+| [`main`](https://github.com/7uHeng/ProOOD/tree/main) | **ProOOD + [SGN]** <br> The primary implementation integrating ProOOD with **[SGN]**. Contains training/evaluation code for SemanticKITTI, KITTI-360, and OOD benchmarks. | ✅ Available |
+| [`baseline_b`](https://github.com/7uHeng/ProOOD/tree/baseline_b) | **ProOOD + [VoxDet]** <br> The implementation integrating ProOOD with **[VoxDet]**. | 🚧 Updating |
 
 > **💡 Note on Plug-and-Play Design:**
 > ProOOD does not rely on specific backbone structures. The core modules (Semantic Imputation, Tail Mining, and EchoOOD scoring) can be easily adapted to other 3D occupancy frameworks. We provide these two branches as representative examples.
 
 > **How to switch between baselines:**
 > ```bash
-> # Checkout the implementation based on [Baseline A]
+> # Checkout the implementation based on [SGN]
 > git checkout main
 > 
-> # Checkout the implementation based on [Baseline B]
+> # Checkout the implementation based on [VoxDet]
 > git checkout baseline_b
 > ```
 
 ---
-
-## 🛠️ Installation
-*(Coming Soon)*
-We will provide detailed instructions for environment setup, including CUDA versions and dependency installation.
-
-## 📂 Data Preparation
-*(Coming Soon)*
-Instructions for downloading SemanticKITTI/SSCBench-KITTI360 and processing the **OccOoD** dataset will be released shortly.
-
-## 🏋️ Training & Evaluation
-*(Coming Soon)*
-Scripts for training ProOOD and evaluating both ID and OOD metrics will be provided.
 
 ## 📜 Citation
 If you find this work helpful in your research, please consider citing:
