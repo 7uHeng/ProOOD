@@ -260,7 +260,7 @@ After training a ProOOD model on the standard SemanticKITTI or KITTI-360 benchma
 # Evaluate on Vaakitti360
 ./tools/dist_test.sh projects/configs/sgn/proood-ood-vaakitti360.py ./path/to/ckpts.pth 4
 
-# Evaluate on Street3D (STU)
+# Evaluate on STU
 ./tools/dist_test.sh projects/configs/sgn/proood-ood-stu.py ./path/to/ckpts.pth 4
 ```
 
