@@ -5,118 +5,82 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 <p align="center">
-  <img src="asserts/pipeline.png" width="800" alt="ProOOD Pipeline">
+  <img src="asserts/pipeline.png" width="80%" alt="ProOOD Pipeline"/>
 </p>
 
-## 📰 Abstract
-3D semantic occupancy prediction is central to autonomous driving, yet current methods are vulnerable to **long-tailed class bias** and **out-of-distribution (OOD)** inputs, often over-confidently assigning anomalies to rare classes. 
+We present **ProOOD**, a lightweight plug-and-play method that addresses **long-tailed class bias** and **out-of-distribution (OOD)** detection in 3D semantic occupancy prediction, via three core designs: (1) **Prototype-Guided Semantic Imputation** to fill occluded regions, (2) **Prototype-Guided Tail Mining** to strengthen rare-class representations, and (3) **EchoOOD Score**, a training-free OOD detector fusing local logit coherence with prototype matching.
 
-We present **ProOOD**, a lightweight, plug-and-play method that couples prototype-guided refinement with training-free OOD scoring. ProOOD comprises three key components:
-1. **Prototype-Guided Semantic Imputation**: Fills occluded regions with class-consistent features to enhance structural completeness.
-2. **Prototype-Guided Tail Mining**: Strengthens rare-class representations to curb OOD absorption, improving long-tail performance.
-3. **EchoOOD Score**: A novel OOD detection mechanism that fuses local logit coherence with local and global prototype matching to produce reliable voxel-level OOD scores.
+---
 
-Extensive experiments on five datasets demonstrate that ProOOD achieves state-of-the-art performance on both **in-distribution 3D occupancy prediction** and **OOD detection**.
+| [🛠️ Installation](#installation) | [📂 Data](#data-preparation) | [🏋️ Training](#training--evaluation) | [📦 Weights](#pretrained-weights) | [🌿 Branches](#branches) | [📜 Citation](#citation) |
+|:---:|:---:|:---:|:---:|:---:|:---:|
 
 ---
 
 ## 🛠️ Installation
 
-Please refer to **[docs/install.md](docs/install.md)** for step-by-step installation instructions, including:
-- Conda environment setup (Python 3.8)
-- PyTorch 1.9.1 + CUDA 11.1
-- mmcv-full, mmdet, mmseg, mmdet3d
-- Additional dependencies (timm, spconv, torch-scatter, torchmetrics)
+Setup details in **[docs/install.md](docs/install.md)** — Conda, PyTorch 1.9.1 + CUDA 11.1, mmdet3d, spconv, etc.
 
 ## 📂 Data Preparation
 
-Please refer to **[docs/dataset.md](docs/dataset.md)** for detailed instructions on:
-- **SemanticKITTI**: Download, label generation, depth estimation (MobileStereoNet/SQL), pseudo point cloud generation
-- **SSCBench-KITTI-360**: Download, label preprocessing, depth to pseudo point cloud
-- **OccOoD Dataset**: OOD benchmarks (Vaakitti, Vaakitti360, STU)
+Details in **[docs/dataset.md](docs/dataset.md)** for SemanticKITTI, KITTI-360, Vaakitti, Vaakitti360, and STU.
 
 ## 🏋️ Training & Evaluation
 
-Please refer to **[docs/run.md](docs/run.md)** for all training and evaluation commands.
+All commands in **[docs/run.md](docs/run.md)**. Quick start:
 
-### Quick Start
-
-```shell
-# Train ProOOD on SemanticKITTI with 4 GPUs
+```bash
+# train (4 GPUs)
 ./tools/dist_train.sh projects/configs/sgn/proood-semkitti.py 4
 
-# Evaluate
+# eval
 ./tools/dist_test.sh projects/configs/sgn/proood-semkitti.py ./path/to/ckpts.pth 4
 
-# OOD Evaluation
+# OOD
 ./tools/dist_test_ood.sh projects/configs/sgn/proood-ood-vaakitti.py ./path/to/ckpts.pth 4
 ```
 
-### Available Configs
-
-| Config | Dataset | Depth Model | OOD? |
-|--------|---------|-------------|------|
-| `proood-semkitti.py` | SemanticKITTI | MobileStereoNet | No |
-| `proood-sql-semkitti.py` | SemanticKITTI | SQL | No |
-| `proood-kitti360.py` | KITTI-360 | MobileStereoNet | No |
-| `proood-sql-kitti360.py` | KITTI-360 | SQL | No |
-| `proood-ood-vaakitti.py` | Vaakitti | SQL | Yes |
-| `proood-ood-vaakitti360.py` | Vaakitti360 | SQL | Yes |
-| `proood-ood-stu.py` | STU | SQL | Yes |
-
----
-
 ## 📦 Pretrained Weights
 
-We provide pretrained models for the SGN backbone on different datasets:
+| Config | Train Set | Train Depth | Test Depth | OOD | Weights |
+|:--|:--|:--|:--|:--:|:--|
+| `proood-semkitti` | SemanticKITTI | MSN | MSN | — | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_semkitti_occ.pth) |
+| `proood-sql-semkitti` | SemanticKITTI | SQL | SQL | — | — |
+| `proood-kitti360` | KITTI-360 | MSN | MSN | — | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_kitti360_occ.pth) |
+| `proood-sql-kitti360` | KITTI-360 | SQL | SQL | — | — |
+| `proood-ood-vaakitti` | SemanticKITTI | MSN | SQL | ✓ | — |
+| `proood-ood-vaakitti360` | KITTI-360 | SQL | SQL | ✓ | [link](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_kitti360_ood.pth) |
+| `proood-ood-stu` | SemanticKITTI | MSN | SQL | ✓ | — |
 
-| Model | Dataset | Depth Model | Download |
-|:------|:--------|:------------|:---------|
-| ProOOD + SGN | SemanticKITTI | MobileStereoNet | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_semkitti_occ.pth) |
-| ProOOD + SGN | KITTI-360 | MobileStereoNet | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_kitti360_occ.pth) |
-| ProOOD + SGN (OOD) | SemanticKITTI | SQL | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_ood.pth) |
-| ProOOD + SGN (OOD) | KITTI-360 | SQL | [Download](https://github.com/7uHeng/ProOOD/releases/download/v1.0/proood_sgn_sql_kitti360_ood.pth) |
+> **MSN** = MobileStereoNet. All models use the SGN backbone.  
+> OOD configs are for OccOoD benchmark evaluation (Vaakitti / Vaakitti360 / STU).
 
----
+## 🌿 Branches
 
-## 🌿 Branches & Baselines
+ProOOD is backbone-agnostic. Two reference implementations are provided:
 
-ProOOD is designed as a **plug-and-play** module. We provide implementations integrated with two distinct mainstream 3D occupancy prediction backbones:
+| Branch | Backbone | Status |
+|:--|:--|:--:|
+| [`main`](https://github.com/7uHeng/ProOOD/tree/main) | **SGN** | ✅ |
+| [`baseline_b`](https://github.com/7uHeng/ProOOD/tree/baseline_b) | **VoxDet** | 🚧 |
 
-| Branch Name | Description | Status |
-| :--- | :--- | :--- |
-| [`main`](https://github.com/7uHeng/ProOOD/tree/main) | **ProOOD + [SGN]** <br> The primary implementation integrating ProOOD with **[SGN]**. Contains training/evaluation code for SemanticKITTI, KITTI-360, and OOD benchmarks. | ✅ Available |
-| [`baseline_b`](https://github.com/7uHeng/ProOOD/tree/baseline_b) | **ProOOD + [VoxDet]** <br> The implementation integrating ProOOD with **[VoxDet]**. | 🚧 Updating |
-
-> **💡 Note on Plug-and-Play Design:**
-> ProOOD does not rely on specific backbone structures. The core modules (Semantic Imputation, Tail Mining, and EchoOOD scoring) can be easily adapted to other 3D occupancy frameworks. We provide these two branches as representative examples.
-
-> **How to switch between baselines:**
-> ```bash
-> # Checkout the implementation based on [SGN]
-> git checkout main
-> 
-> # Checkout the implementation based on [VoxDet]
-> git checkout baseline_b
-> ```
-
----
+```bash
+git checkout main          # SGN
+git checkout baseline_b    # VoxDet
+```
 
 ## 📜 Citation
-If you find this work helpful in your research, please consider citing:
 
 ```bibtex
 @article{zhang2026proood,
-  title={ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction},
-  author={Zhang, Yuheng and Duan, Mengfei and Peng, Kunyu and Wang, Yuhang and Wen, Di and Paudel, Danda Pani and Van Gool, Luc and Yang, Kailun},
-  journal={arXiv preprint arXiv:2604.01081},
-  year={2026}
+  title   = {ProOOD: Prototype-Guided Out-of-Distribution 3D Occupancy Prediction},
+  author  = {Zhang, Yuheng and Duan, Mengfei and Peng, Kunyu and Wang, Yuhang and
+             Wen, Di and Paudel, Danda Pani and Van Gool, Luc and Yang, Kailun},
+  journal = {arXiv preprint arXiv:2604.01081},
+  year    = {2026}
 }
 ```
 
-## Acknowledgement
-This project is based on the following open-source projects. We thank their authors for making the source code publically available.
-* [SGN](https://github.com/Jieqianyu/SGN)
-* [ProtoOcc](https://github.com/SPA-junghokim/ProtoOcc)
-* [VoxDet](https://github.com/vita-epfl/VoxDet)
-* [mmdet3d](https://github.com/open-mmlab/mmdetection3d)
+## 🙏 Acknowledgement
+
+Thanks to the authors of [SGN](https://github.com/Jieqianyu/SGN), [ProtoOcc](https://github.com/SPA-junghokim/ProtoOcc), [VoxDet](https://github.com/vita-epfl/VoxDet), and [mmdet3d](https://github.com/open-mmlab/mmdetection3d).
