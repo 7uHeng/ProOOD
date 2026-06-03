@@ -217,6 +217,7 @@ class ProOODHead(nn.Module):
             vox_feats_full = out_dict['vox_feats_full']
             vox_feats_input = out_dict['vox_feats_input']
             self.output_prototype_module(vox_feats_full, target)
+            self.input_prototype_module(vox_feats_input, target_2)
 
         if step_type == "train":
             sem_pred_2 = out_dict["sem_logit"]
